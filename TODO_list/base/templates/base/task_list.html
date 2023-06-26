@@ -1,14 +1,33 @@
-{% if request.user.is_authenticated %}
+{% extends 'base/main.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <div>
+        <h1>Hello {{request.user|title}}</h1>
+        <h3 style="margin:0">You have <i>{{count}}</i> 
+            incomplete task</h3>
+    </div>
+    {% if request.user.is_authenticated %}
     <p>{{request.user}}</p>
     <a href="{% url 'logout' %}">LogOut</a>
-{% else %}
-    <a href="{% url 'login' %}">Login</a>
-{% endif %}
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+
+
+</div>
+
+
 
 <hr>
 <h1>MY TO-DO List {{color}}</h1>
 
 <a href="{% url 'task-create' %}">Add Task</a>
+
+<form method="GET">
+    <input type='text' name='search-area' value="{{search_input}}">
+    <input type="submit" value='Search'>
+</form>
 
 <table>
     <tr>
@@ -29,3 +48,5 @@
     <h3>no item</h3>
     {% endfor %}
 </table>
+{% endblock content %}
+
